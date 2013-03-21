@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * A module for testing description lists.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function test_dl_menu() {
+  $items = array();
+
+  $items['test-dl'] = array(
+    'title' => 'Test Description Lists',
+    'page callback' => 'test_dl_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback: Displays description lists for testing purposes.
+ */
+function test_dl_page() {
+  $build = array();
+
+  $build['glossary'] = array(
+    '#theme' => 'description_list',
+    '#title' => t('Glossary'),
+    '#wrapper_tag' => 'aside',
+    '#attributes' => array('class' => array('glossary')),
+    '#groups' => array(
+      array(
+        'dt' => '<dfn>' . t('RSS') . '</dfn>',
+        'dd' => t('An XML format for aggregating information from websites whose content is frequently updated.'),
+      ),
+      array(
+        'dt' => array(
+          t('Apple'),
+          t('Pear'),
+          t('Orange'),
+        ),
+        'dd' => t('Fruit'),
+      ),
+      array(
+        'dt' => array(
+          array(
+            '#markup' => t('Automotive transport'),
+            '#wrapper_attributes' => array('class' => array('foo')),
+          ),
+        ),
+        'dd' => array(
+          t('Car'),
+          t('Motorbike'),
+          array(
+            '#markup' => t('Moped'),
+            '#wrapper_attributes' => array('class' => array('bar')),
+          ),
+        ),
+      ),
+      array(
+        'dt' => array(
+          '#type' => 'link',
+          '#title' => t('Link'),
+          '#href' => '<front>',
+        ),
+        'dd' => array(
+          array(
+            '#type' => 'link',
+            '#title' => t('Sub link'),
+            '#href' => '<front>',
+          ),
+          array(
+            '#type' => 'link',
+            '#title' => t('Sub link'),
+            '#href' => '<front>',
+          ),
+          array(
+            '#type' => 'link',
+            '#title' => t('Sub link'),
+            '#href' => '<front>',
+          ),
+        ),
+      ),
+      array(
+        'dt' => array(
+          t('Abbreviations'),
+        ),
+        'dd' => array(
+          array(
+            '#prefix' => '<dfn><abbr title="' . t('HyperText Markup Language') . '">',
+            '#markup' => t('HTML'),
+            '#suffix' => '</abbr></dfn>',
+            '#attributes' => array('class' => array('foo')),
+            '#wrapper_attributes' => array('class' => array('wrapper-foo')),
+          ),
+          array(
+            '#prefix' => '<dfn><abbr title="' . t('Your Mileage May Vary') . '">',
+            '#markup' => t('YMMV'),
+            '#suffix' => '</abbr></dfn>',
+            '#attributes' => array('class' => array('bar')),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  return $build;
+}
+
